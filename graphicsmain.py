@@ -12,6 +12,8 @@ class GameGraphics:
         
         # draw the terrain
         # TODO: Draw a line from (-110,0) to (110,0)
+        line = Line((-110,0),(110,0))
+        line.draw(win)
 
         self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)]
         self.draw_scores  = [self.drawScore(0), self.drawScore(1)]
@@ -19,9 +21,12 @@ class GameGraphics:
 
     def drawCanon(self,playerNr):
         # draw the cannon
-        # TODO: draw a square with the size of the cannon with the color
+        # TODO: draw a square with the size of the cannon with the color        
         # and the position of the player with number playerNr.
         # After the drawing, return the rectangle object.
+        square = Rectangle((players[playerNr].getX(),0),(10,10)) #((coord),(size))??
+        square.setBackground(players[playerNr].getColor) #color
+        square.draw(win) #draw the square
         return None
 
     def drawScore(self,playerNr):
@@ -30,6 +35,8 @@ class GameGraphics:
         # for player number playerNr. The text should be placed under
         # the corresponding cannon. After the drawing,
         # return the text object.
+        text = Text((players[playerNr].getX(), -2), f'Score: {players[playerNr].getScore}') #((coord), (score))
+        text.draw(win)
         return None
 
     def fire(self, angle, vel):
@@ -41,10 +48,13 @@ class GameGraphics:
 
         # TODO: If the circle for the projectile for the current player
         # is not None, undraw it!
+        if circle == None:
+            circle.undraw()
 
         # draw the projectile (ball/circle)
         # TODO: Create and draw a new circle with the coordinates of
         # the projectile.
+        circle = Circle((circle_X,circle_y), 5) #((coord), (radius)?)
 
         while proj.isMoving():
             proj.update(1/50)
@@ -62,6 +72,9 @@ class GameGraphics:
     def updateScore(self,playerNr):
         # update the score on the screen
         # TODO: undraw the old text, create and draw a new text
+        text.undraw() #undraw
+        drawScore(self, playerNr) #call function above to draw new score
+
         pass
 
     def play(self):
