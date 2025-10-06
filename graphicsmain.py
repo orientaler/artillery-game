@@ -12,8 +12,8 @@ class GameGraphics:
         
         # draw the terrain
         # TODO: Draw a line from (-110,0) to (110,0)
-        self.line = Line((-110,0),(110,0))
-        self.line._draw(win)
+        line = Line((-110,0),(110,0))
+        line.draw(win)
 
         self.draw_cannons = [self.drawCanon(0), self.drawCanon(1)]
         self.draw_scores  = [self.drawScore(0), self.drawScore(1)]
@@ -24,9 +24,10 @@ class GameGraphics:
         # TODO: draw a square with the size of the cannon with the color        
         # and the position of the player with number playerNr.
         # After the drawing, return the rectangle object.
-        square = Rectangle((players[playerNr].getX(),0),(10,10)) #((coord),(size))??
-        square.setBackground(players[playerNr].getColor) #color
-        square._draw(win) #draw the square
+        size = 5 #size of the cannon
+        square = Rectangle((players[playerNr].getX()-size,0),(players[playerNr].get()+size,0)) #((coord corner 1),(coord corner 2))??
+        square.setFill(players[playerNr].getColor) #cannon color
+        square.draw(self.win) #draw the square
         return None
 
     def drawScore(self,playerNr):
@@ -36,7 +37,7 @@ class GameGraphics:
         # the corresponding cannon. After the drawing,
         # return the text object.
         self.text = Text((players[playerNr].getX(), -2), f'Score: {players[playerNr].getScore}') #((coord), (score))
-        self.text._draw(win)
+        self.text.draw(self.win)
         return None
 
     def fire(self, angle, vel):
@@ -55,7 +56,7 @@ class GameGraphics:
         # TODO: Create and draw a new circle with the coordinates of
         # the projectile.
         self.circle = Circle((circle_X,circle_y), 5) #((coord), (radius)?)
-        self.circle._draw()
+        self.circle.draw()
 
         while proj.isMoving():
             proj.update(1/50)
