@@ -117,9 +117,9 @@ class Projectile:
 
 """ Models a player """
 class Player:
-    def __init__(self, game: Game, isReserved: bool, xPos: int, color: str):
+    def __init__(self, game: Game, isReversed: bool, xPos: int, color: str):
         self.game = game
-        self.isReserved = isReserved
+        self.isReversed = isReversed
         self.xPos = xPos
         self.color = color
         self.score = 0
@@ -127,8 +127,18 @@ class Player:
 
     """ Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player. """
     def fire(self, angle, velocity):
+        if self.isReversed:
+            angle = 180 - angle
+
+        wind = self.game.getCurrentWind()
+        startingXPos = self.getX()
+        startingYPos = self.game.cannonSize / 2
+
+        lowerXBound = -110
+        upperXBound = 110
+
         self.aim = [angle, velocity]
-        return Projectile(angle, velocity, self.game.getCurrentWind(), self.getX(), 0, -110, 110)
+        return Projectile(angle, velocity, wind, startingXPos, startingYPos, lowerXBound, upperXBound)
 
     """ Gives the x-distance from this players cannon to a projectile. If the cannon and the projectile touch (assuming the projectile is on the ground and factoring in both cannon and projectile size) this method should return 0"""
     def projectileDistance(self, proj):
