@@ -38,7 +38,7 @@ class GameGraphics:
         # the corresponding cannon. After the drawing,
         # return the text object.
         player = self.game.getPlayers()[playerNr]
-        score = Text(Point(player.getX(), -2), f'Score: {players[playerNr].getScore}')
+        score = Text(Point(player.getX(), -2), f'Score: {player.getScore()}')
         score.draw(self.win)
         return score
 
@@ -51,13 +51,13 @@ class GameGraphics:
 
         # TODO: If the circle for the projectile for the current player
         # is not None, undraw it!
-        if self.draw_projs[self.game.getCurrentPlayerNumber()] != None:
-            self.draw_projs[self.game.getCurrentPlayerNumber()].undraw
+        if self.draw_projs[self.game.getCurrentPlayerNumber()] is not None:
+            self.draw_projs[self.game.getCurrentPlayerNumber()].undraw()
 
         # draw the projectile (ball/circle)
         # TODO: Create and draw a new circle with the coordinates of
         # the projectile.
-        circle = Circle(Point(circle_X,circle_y), 2) 
+        circle = Circle(Point(circle_X,circle_Y), 2) 
         circle.draw(self.win)
         self.draw_projs[self.game.getCurrentPlayerNumber()] = circle
 
