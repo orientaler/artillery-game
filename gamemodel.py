@@ -1,6 +1,7 @@
 from math import sin,cos,radians
 import random
 
+""" This is the model of the game"""
 class Game:
     def __init__(self, _cannonSize, _ballSize):
         self.players = [Player(), Player()]
@@ -10,39 +11,47 @@ class Game:
         wind = random.random() * 20 - 10
         self.setCurrentWind(wind)
 
+    """ A list containing both players """
     def getPlayers(self):
         return self.players 
 
+    """ The height/width of the cannon """
     def getCannonSize(self):
         return self.cannonSize 
 
+    """ The radius of cannon balls """
     def getBallSize(self):
         return self.ballSize 
 
+    """ The current player, i.e. the player whose turn it is """
     def getCurrentPlayer(self):
         currentPlayer = self.players[self.currentPlayerIndex]
         return currentPlayer 
 
+    """ The opponent of the current player """
     def getOtherPlayer(self):
         otherPlayer =  self.players[not self.currentPlayerIndex]
         return otherPlayer 
     
+    """ The number (0 or 1) of the current player. This should be the position of the current player in getPlayers(). """
     def getCurrentPlayerNumber(self):
         return self.currentPlayerIndex 
     
+    """ Switch active player """
     def nextPlayer(self):
         if self.currentPlayerIndex:
             self.currentPlayerIndex = 0
         else:
             self.currentPlayerIndex = 1 
 
+    """ Set the current wind speed, only used for testing """
     def setCurrentWind(self, wind):
         self.currentWind = wind 
-
     
     def getCurrentWind(self):
         return self.currentWind 
 
+    """ Start a new round with a random wind value (-10 to +10) """
     def newRound(self):
         wind = random.random() * 20 - 10
         self.setCurrentWind(wind)
