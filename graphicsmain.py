@@ -7,6 +7,7 @@ class GameGraphics:
     def __init__(self, game: Game):
         self.game = game
 
+        # open the window
         self.win = GraphWin("Cannon game", 640, 480, autoflush=False)
         self.win.setCoords(-110, -10, 110, 155)
 
@@ -29,7 +30,7 @@ class GameGraphics:
 
     def drawScore(self, playerNr):
         player = self.game.getPlayers()[playerNr]
-        score = Text(Point(player.getX(), -2), f"Score: {player.getScore}")
+        score = Text(Point(player.getX(), -2), f"Score: {player.getScore()}")
         score.draw(self.win)
         return score
 
