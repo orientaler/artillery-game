@@ -135,6 +135,8 @@ class Player:
 
     def fire(self, angle, velocity):
         """Create and return a projectile starting at the centre of this players cannon. Replaces any previous projectile for this player."""
+        self.aim = (angle, velocity)
+
         if self.isReversed:
             angle = 180 - angle
 
@@ -145,7 +147,6 @@ class Player:
         lowerXBound = -110
         upperXBound = 110
 
-        self.aim = (angle, velocity)
         return Projectile(
             angle, velocity, wind, startingXPos, startingYPos, lowerXBound, upperXBound
         )

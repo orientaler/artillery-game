@@ -18,7 +18,7 @@ class GameGraphics:
         self.draw_scores = [self.drawScore(0), self.drawScore(1)]
         self.draw_projs = [None, None]
 
-    def drawCanon(self, playerNr):
+    def drawCanon(self, playerNr: int):
         size = self.game.getCannonSize()  # size of the cannon
         player = self.game.getPlayers()[playerNr]
         square = Rectangle(
@@ -28,13 +28,13 @@ class GameGraphics:
         square.draw(self.win)
         return square
 
-    def drawScore(self, playerNr):
+    def drawScore(self, playerNr: int):
         player = self.game.getPlayers()[playerNr]
-        score = Text(Point(player.getX(), -2), f"Score: {player.getScore()}")
+        score = Text(Point(player.getX(), -6), f"Score: {player.getScore()}")
         score.draw(self.win)
         return score
 
-    def fire(self, angle, vel):
+    def fire(self, angle: float, vel: float):
         player = self.game.getCurrentPlayer()
         proj = player.fire(angle, vel)
 
@@ -46,6 +46,7 @@ class GameGraphics:
 
         circle = Circle(Point(circle_X, circle_Y), self.game.getBallSize())
         circle.draw(self.win)
+        circle.setFill(player.getColor())
         self.draw_projs[self.game.getCurrentPlayerNumber()] = circle
 
         while proj.isMoving():
@@ -60,7 +61,7 @@ class GameGraphics:
 
         return proj
 
-    def updateScore(self, playerNr):
+    def updateScore(self, playerNr: int):
         self.draw_scores[playerNr].undraw()
         self.draw_scores[playerNr] = self.drawScore(playerNr)
 
@@ -92,7 +93,7 @@ class GameGraphics:
 
 
 class InputDialog:
-    def __init__(self, angle, vel, wind):
+    def __init__(self, angle: float, vel: float, wind: float):
         self.win = win = GraphWin("Fire", 200, 300)
         win.setCoords(0, 4.5, 4, 0.5)
         Text(Point(1, 1), "Angle").draw(win)
@@ -130,7 +131,7 @@ class InputDialog:
 
 
 class Button:
-    def __init__(self, win, center, width, height, label):
+    def __init__(self, win: GraphWin, center: Point, width: float, height: float, label: str):
         w, h = width / 2.0, height / 2.0
         x, y = center.getX(), center.getY()
         self.xmax, self.xmin = x + w, x - w
@@ -145,7 +146,7 @@ class Button:
         self.active = False
         self.deactivate()
 
-    def clicked(self, p):
+    def clicked(self, p: Point):
         return (
             self.active
             and self.xmin <= p.getX() <= self.xmax
