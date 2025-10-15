@@ -80,6 +80,22 @@ class GameGraphics:
         self.draw_scores[playerNr].undraw()
         self.draw_scores[playerNr] = self.drawScore(playerNr) 
 
+    def explode(self, playerNr):
+        explosionSize = self.game.getBallSize()
+        player = self.game.getCurrentPlayer()
+
+        explosionPlace = self.game.getOtherPlayer()
+        explosion_X = explosionPlace.getX()
+        explosion_Y = self.game.getBallSize()
+
+        while explosionSize != self.game.getCannonSize() * 2:
+            circle = Circle(Point(explosion_X, explosion_Y), explosionSize)
+            circle.setFill(player.getColor())
+            circle.draw(self.win)
+            update(50)
+            circle.undraw()
+            explosionSize += 1
+
     def play(self):
         while True:
             player = self.game.getCurrentPlayer()
@@ -103,8 +119,13 @@ class GameGraphics:
             if distance == 0.0:
                 player.increaseScore()
                 self.updateScore(self.game.getCurrentPlayerNumber())
+                self.explode(self.game.getCurrentPlayerNumber())
                 self.game.newRound()
-
+            
+            for projectile in self.draw_projs:
+                if projectile is not None:
+                    projectile.undraw()
+            self.draw_projs = [None, None]
             self.game.nextPlayer()
 
 
