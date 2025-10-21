@@ -61,6 +61,7 @@ class GameGraphics:
         # the projectile.
         circle = Circle(Point(circle_X, circle_Y), 2)
         circle.draw(self.win)
+        circle.setFill(player.getColor())
         self.draw_projs[self.game.getCurrentPlayerNumber()] = circle
 
         while proj.isMoving():
